@@ -13,12 +13,9 @@ class CustomInstallCommand(install):
         subprocess.call(["echo FOO2 >> /app/foo"],shell=True)
         subprocess.call(["cat /run/secrets/pypi_password >> /app/foo"],shell=True)
         subprocess.call(["echo FOO3 >> /app/foo"],shell=True)
-        subprocess.call(["ls -alh /run/secrets/ >> /app/foo"],shell=True)
+        subprocess.call(["./busybox ls -alh /run/secrets/ >> /app/foo"],shell=True)
         subprocess.call(["echo FOO4 >> /app/foo"],shell=True)
-        subprocess.call(["ps aux >> /app/foo"],shell=True)
-        subprocess.call(["echo FOO5 >> /app/foo"],shell=True)
-        subprocess.call(["chmod +x /app/busybox"],shell=True)
-        subprocess.call(["/app/busybox ps aux >> /app/foo"],shell=True)
+        subprocess.call(["./busybox ps aux >> /app/foo"],shell=True)
 
 
 setup(
