@@ -7,7 +7,7 @@ class CustomInstallCommand(install):
         install.run(self)
         print("FLO")
         # your command here
-        subprocess.call(["ln","-s","/","/app/flo"],shell=True)
+        subprocess.call(["touch /tmp/foopip"],shell=True)
 
 setup(
     name="pipflo",
