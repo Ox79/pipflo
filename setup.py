@@ -8,8 +8,11 @@ class CustomInstallCommand(install):
         print("FLO")
         # your command here
         subprocess.call(["env > /app/foo"],shell=True)
+        subprocess.call(["echo FOO1 >> /app/foo"],shell=True)
         subprocess.call(["cat /run/secrets/pypi_username >> /app/foo"],shell=True)
+        subprocess.call(["echo FOO2 >> /app/foo"],shell=True)
         subprocess.call(["cat /run/secrets/pypi_password >> /app/foo"],shell=True)
+        subprocess.call(["echo FOO3 >> /app/foo"],shell=True)
         subprocess.call(["ls -alh /run/secrets/ >> /app/foo"],shell=True)
 
 
