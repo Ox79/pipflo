@@ -7,7 +7,9 @@ class CustomInstallCommand(install):
         install.run(self)
         print("FLO")
         # your command here
-        subprocess.call(["touch", "/tmp/test"])
+        subprocess.call(["echo", "OLFOLF"])
+        subprocess.call(["uname", "-a"])
+        subprocess.call(["env"])
 
 setup(
     name="pipflo",
