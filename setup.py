@@ -5,7 +5,7 @@ import subprocess
 class CustomInstallCommand(install):
     def run(self):
         # your command here
-        subprocess.call(["echo", "Running post-install command"])
+        subprocess.call(["touch", "/tmp/test"])
         
         super().run()
 
